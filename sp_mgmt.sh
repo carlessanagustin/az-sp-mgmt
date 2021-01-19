@@ -5,7 +5,7 @@ export FILE=credentials.sec.json
 export SP_ROLE1="Reader"
 export SP_ROLE2="Monitoring Reader"
 
-source ./vars.sec
+source ./secrets.sh
 
 
 # SP MANAGEMENT
@@ -48,4 +48,3 @@ az_login_with_sp(){
     --username http://${SP_NAME} --password `jq -r '.password' ${FILE}`
 }
 
-delete_sp

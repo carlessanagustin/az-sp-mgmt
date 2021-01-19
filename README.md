@@ -1,7 +1,7 @@
 # manage azure sp via cli
 
 ```shell
-cp vars.save vars.sec
-vim vars.sec
-./go.sh
+cp vars.sh secrets.sh
+vim secrets.sh
+./sp_mgmt.sh
 ```

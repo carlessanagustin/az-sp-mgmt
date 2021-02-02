@@ -6,7 +6,7 @@
 source ./secrets.sh
 
 main(){
-  create_sp_client_certificate
+  create_sp_client_secret
 }
 
 # SP MANAGEMENT
@@ -21,6 +21,7 @@ create_sp_client_certificate(){
     --create-cert \
     --role "${SP_ROLE1}" --scopes /subscriptions/${AZ_SUB_ID} \
     > ${FILE}
+  # TODO: then create pfx - openssl pkcs12 -export -out out.pfx -inkey in.pem -in in.pem
 }
 
 create_sp_sdk(){

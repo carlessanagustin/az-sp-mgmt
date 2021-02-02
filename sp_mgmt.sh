@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
-
-export SP_NAME=test-carles-01
-export FILE=credentials.sec.json
-export SP_ROLE1="Reader"
-export SP_ROLE2="Monitoring Reader"
-
+[[ -z ${SP_NAME} ]]   && export SP_NAME=test-carles-01
+[[ -z ${FILE} ]]      && export FILE=credentials.sec.json
+[[ -z ${SP_ROLE1} ]]  && export SP_ROLE1="Reader"
+[[ -z ${SP_ROLE2} ]]  && export SP_ROLE2="Monitoring Reader"
 source ./secrets.sh
 
+main(){
+  create_sp_client_certificate
+}
 
 # SP MANAGEMENT
-create_sp(){
+create_sp_client_secret(){
   az ad sp create-for-rbac --name ${SP_NAME} --years 2 \
+    --role "${SP_ROLE1}" --scopes /subscriptions/${AZ_SUB_ID} \
     > ${FILE}
 }
 
-create_sp_adv(){
+create_sp_client_certificate(){
   az ad sp create-for-rbac --name ${SP_NAME} --years 2 \
+    --create-cert \
     --role "${SP_ROLE1}" --scopes /subscriptions/${AZ_SUB_ID} \
     > ${FILE}
 }
@@ -23,6 +26,11 @@ create_sp_adv(){
 create_sp_sdk(){
   az ad sp create-for-rbac --name ${SP_NAME} --skip-assignment --sdk-auth \
    > ${FILE}
+}
+
+create_sp_simple(){
+  az ad sp create-for-rbac --name ${SP_NAME} --years 2 \
+    > ${FILE}
 }
 
 delete_sp(){
@@ -48,3 +56,4 @@ az_login_with_sp(){
     --username http://${SP_NAME} --password `jq -r '.password' ${FILE}`
 }
 
+main

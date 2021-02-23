@@ -5,11 +5,20 @@
 * azure cli
 * jq
 
-## usage
+## usage (TODO)
 
-1. Setup environment: `cp vars.sh secrets.sh && vim secrets.sh`
-2. New SP assignment: `SP_NAME=test-carles-01 SP_ROLE_NEW="Reader" ./sp_mgmt.sh create_sp_client_secret`
-3. Add assignment to SP `SP_NAME=test-carles-01 SP_ROLE_ASSIGN="Monitoring Reader" ./sp_mgmt.sh create_sp_scope`
+```shell
+./sp_mgmt.sh create_multiple_sp > run.sh
+./sp_mgmt.sh assign_multiple_roles_to_sp >> run.sh
+chmod +x run.sh
+./run.sh
+```
+
+## usage (WIP)
+
+1. Setup environment adding variables: `cp vars.sh secrets.sh && vim secrets.sh`
+2. New SP assignment (`DEBUG=false` to run): `./sp_mgmt.sh create_multiple_sp`
+3. Assign roles to SP (`DEBUG=false` to run): `./sp_mgmt.sh assign_multiple_roles_to_sp`
 
 ## Access and identity options for Azure Kubernetes Service (AKS)
 

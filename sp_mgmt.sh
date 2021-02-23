@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
-[[ -z ${SP_NAME} ]]   && export SP_NAME=test-carles-01
-[[ -z ${FILE} ]]      && export FILE=credentials.sec.json
-[[ -z ${SP_ROLE1} ]]  && export SP_ROLE1="Reader"
-[[ -z ${SP_ROLE2} ]]  && export SP_ROLE2="Monitoring Reader"
+
+[[ -z ${SP_NAME} ]]         && export SP_NAME=test-carles-01
+[[ -z ${FILE} ]]            && export FILE=credentials.sec.json
+[[ -z ${SP_ROLE_NEW} ]]    && export SP_ROLE_NEW="Reader"
+[[ -z ${SP_ROLE_ASSIGN} ]]  && export SP_ROLE_ASSIGN="Monitoring Reader"
 source ./secrets.sh
 
-main(){
-  create_sp_client_secret
-}
 
 # SP MANAGEMENT
 create_sp_client_secret(){
   az ad sp create-for-rbac --name ${SP_NAME} --years 2 \
-    --role "${SP_ROLE1}" --scopes /subscriptions/${AZ_SUB_ID} \
+    --role "${SP_ROLE_NEW}" --scopes /subscriptions/${AZ_SUB_ID} \
     > ${FILE}
 }
 
 create_sp_client_certificate(){
   az ad sp create-for-rbac --name ${SP_NAME} --years 2 \
     --create-cert \
-    --role "${SP_ROLE1}" --scopes /subscriptions/${AZ_SUB_ID} \
+    --role "${SP_ROLE_NEW}" --scopes /subscriptions/${AZ_SUB_ID} \
     > ${FILE}
   # TODO: then create pfx - openssl pkcs12 -export -out out.pfx -inkey in.pem -in in.pem
 }
@@ -46,7 +44,7 @@ list_roles(){
 # todo
 create_sp_scope(){
   az role assignment create --assignee http://${SP_NAME} \
-    --role "${SP_ROLE2}" \
+    --role "${SP_ROLE_ASSIGN}" \
     --subscription ${AZ_SUB_ID}
     #--scopes /subscriptions/${AZ_SUB_ID}
 }
@@ -57,4 +55,6 @@ az_login_with_sp(){
     --username http://${SP_NAME} --password `jq -r '.password' ${FILE}`
 }
 
-main
+
+
+"$@"

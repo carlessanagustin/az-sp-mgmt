@@ -9,7 +9,7 @@
 
 1. Setup environment: `cp vars.sh secrets.sh && vim secrets.sh`
 2. New SP assignment: `SP_NAME=test-carles-01 SP_ROLE_NEW="Reader" ./sp_mgmt.sh create_sp_client_secret`
-3. Add assignment to SP `SP_NAME=test-carles-01 SP_ROLE_ASSIGN="Monitoring Reader" ./sp_mgmt.sh create_sp_client_secret`
+3. Add assignment to SP `SP_NAME=test-carles-01 SP_ROLE_ASSIGN="Monitoring Reader" ./sp_mgmt.sh create_sp_scope`
 
 ## Access and identity options for Azure Kubernetes Service (AKS)
 

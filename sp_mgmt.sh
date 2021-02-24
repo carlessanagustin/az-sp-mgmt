@@ -69,7 +69,7 @@ assign_multiple_roles_to_sp(){
   do
     for h in "${SUBSCRIPTIONS[@]}";
     do
-      for j in "${SP_ROLE_ASSIGN[@]}";
+      for j in "${SP_ROLE_ASSIGN2}";
       do
         create_sp_scope $i "\"$j"\" $h
       done
